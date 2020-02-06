@@ -18,7 +18,7 @@
 
 [colors]
 background = #282a36
-background-alt = #282a36
+background-alt = #21222c
 background-shaded = #a282a36
 foreground = #f8f8f2
 foreground-alt = #f8f8f2
@@ -43,6 +43,8 @@ foreground = ${colors.foreground}
 line-size = 0
 
 border-size = 0
+border-bottom-size = 1
+border-bottom-color = ${colors.background-alt}
 
 padding-left = 5
 padding-right = 5
