@@ -35,6 +35,8 @@ set autoindent
 set copyindent      " copy indent from the previous line
 set foldmethod=syntax
 
+let g:markdown_folding = 1
+
 " Airline
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
