@@ -1,2 +1,2 @@
 install:
-	@rsync -a . /tmp/tchamelot/ --exclude=Makefile --exclude=.git/
+	@rsync -a . ~/ --exclude=Makefile --exclude=.git/
