@@ -1,4 +1,5 @@
 # Set up the prompt
+fpath=($fpath ~/.zfunc ~/.zprompts)
 
 DEFAULT_USER=tchamelot
 
@@ -9,7 +10,7 @@ prompt agnoster
 setopt histignorealldups histignorespace sharehistory
 
 # Use vim key binding
-bindkey -v
+bindkey -e
 bindkey "\e[3~" delete-char
 
 # Keep 1000 lines of history within the shell and save it to ~/.zsh_history:
@@ -19,8 +20,7 @@ HISTFILE=~/.zsh_history
 
 # Use modern completion system
 autoload -Uz compinit
-#fpath=($fpath ~/.zfunc)
-#autoload -U ~/.zfunc/*(:t)
+autoload -U ~/.zfunc/*(:t)
 compinit
 
 zstyle ':completion:*' auto-description 'specify: %d'
@@ -45,8 +45,35 @@ zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 setopt correctall
 
 # Alias
+alias ls="ls --color=auto"
 alias ll="ls --color=auto -lh"
 alias xclip="xclip -selection c"
+alias vim=nvim
+alias ssh="TERM=xterm ssh"
 
-export EDITOR=/usr/bin/vim
-#source ~/.cargo/env
+export EDITOR=/usr/bin/nvim
+
+# tmux
+case $- in *i*)
+    if [ -z "$TMUX" ]; then 
+        exec /usr/bin/tmux
+        export TERM=screen-256color;
+        fi;;
+esac
+
+autoload -Uz add-zsh-hook
+
+function xterm_title_precmd () {
+	print -Pn -- '\e]2;%~\a'
+	[[ "$TERM" == 'screen'* ]] && print -Pn -- '\e_\005{g}%n\005{-}@\005{m}%m\005{-} \005{B}%~\005{-}\e\\'
+}
+
+function xterm_title_preexec () {
+	print -Pn -- '\e]2; %~ ' && print -n -- "${(q)1}\a"
+	[[ "$TERM" == 'screen'* ]] && { print -Pn -- '\e_\005{g}%n\005{-}@\005{m}%m\005{-} \005{B}%~\005{-} %# ' && print -n -- "${(q)1}\e\\"; }
+}
+
+if [[ "$TERM" == (alacritty*|gnome*|konsole*|putty*|rxvt*|screen*|tmux*|xterm*) ]]; then
+	add-zsh-hook -Uz precmd xterm_title_precmd
+	add-zsh-hook -Uz preexec xterm_title_preexec
+fi

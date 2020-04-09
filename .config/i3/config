@@ -25,16 +25,13 @@ font pango:monospace 8
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
-bindsym $mod+l exec i3lockr --blur 25 -- --nofork 
+bindsym Control+$mod+l exec i3lockr --blur 25 -- --nofork 
 
 
 bindsym XF86AudioRaiseVolume exec --no-startup-id amixer set Master 5%+ unmute
 bindsym XF86AudioLowerVolume exec --no-startup-id amixer set Master 5%- unmute
 bindsym XF86AudioMute exec --no-startup-id amixer set Master mute
 #bindsym XF86AudioMicMute exec --no-startup-id 
-
-bindsym XF86MonBrightnessUp exec xbacklight -inc 10;
-bindsym XF86MonBrightnessDown exec xbacklight -dec 10;
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -68,11 +65,23 @@ bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
+# change focus
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
 # split in horizontal orientation
-bindsym $mod+h split h
+#bindsym $mod+h split h
 
 # split in vertical orientation
-bindsym $mod+v split v
+#bindsym $mod+v split v
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
@@ -166,16 +175,16 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 exec --no-startup-id compton -bc -d :0 --config $HOME/.config/compton/config
-exec --no-startup-id feh --no-fehbg --bg-fill '/home/tchamelot/images/arch.png' 
+exec --no-startup-id feh --no-fehbg --bg-fill '/home/tchamelot/images/wallpaper.png' 
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 
 new_window 1pixel
 hide_edge_borders both
 
-# class                 border  bground text    indicator child_border
-client.focused          #6272A4 #6272A4 #F8F8F2 #6272A4   #6272A4
-client.focused_inactive #44475A #44475A #F8F8F2 #44475A   #44475A
-client.unfocused        #282A36 #282A36 #BFBFBF #282A36   #282A36
-client.urgent           #44475A #FF5555 #F8F8F2 #FF5555   #FF5555
-client.placeholder      #282A36 #282A36 #F8F8F2 #282A36   #282A36
-client.background       #F8F8F2
+# class                 border      backgr      text        indicator   child_borer
+client.focused          #4c566a     #3b4252     #eceff4     #3b4252     #4c566a
+client.focused_inactive #3b4252     #2e3440     #d8dee9     #2e3440     #434c5e
+client.unfocused        #3b4252     #2e3440     #d8dee9     #2e3440     #2e3440
+client.urgent           #434c5e     #3b4252     #bf616a     #434c5e     #2e3440
+client.placeholder      #3b4252     #2e3440     #d8dee9     #2e3440     #2e3440
+client.background       #2e3440

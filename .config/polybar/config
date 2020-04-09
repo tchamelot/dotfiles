@@ -17,19 +17,14 @@
 ;==========================================================
 
 [colors]
-background = #282a36
-background-alt = #21222c
-background-shaded = #a282a36
-foreground = #f8f8f2
-foreground-alt = #f8f8f2
-primary = #44475a
-secondary = #6272a4
-alert = #ff5555
-cyan = #8be9fd
-green = #50fa7b
+background = #2e3440
+foreground = #e5e9f0
+foreground-focus = #88c0d0
+foreground-not-focus = #4c566a
+alert = #bf616a
 
 [bar/topbar]
-monitor = ${env:MONITOR:eDP1}
+monitor = ${env:MONITOR:HDMI-0}
 width = 100%
 height = 25
 offset-x = 0
@@ -43,8 +38,6 @@ foreground = ${colors.foreground}
 line-size = 0
 
 border-size = 0
-border-bottom-size = 1
-border-bottom-color = ${colors.background-alt}
 
 padding-left = 5
 padding-right = 5
@@ -59,7 +52,7 @@ font-3 = FontAwesome5Free:style=Regular:size=10;2
 
 modules-left = alsa
 modules-center = i3
-modules-right = wifi eth date battery
+modules-right = eth date
 
 tray-position = none
 
@@ -84,75 +77,46 @@ wrapping-scroll = false
 pin-workspaces = true
 
 label-mode-padding = 2
-label-mode-foreground = ${colors.primary}
+label-mode-foreground = ${colors.foreground}
 label-mode-background = ${colors.background}
 
 ; focused = Active workspace on focused monitor
 label-focused = ""
-label-focused-background = ${colors.background-shaded}
-label-focused-foreground = ${colors.foreground}
-label-focused-underline= ${colors.foreground}
+label-focused-background = ${colors.background}
+label-focused-foreground = ${colors.foreground-focus}
+label-focused-underline= ${colors.background}
 label-focused-padding = 2
 
 ; unfocused = Inactive workspace on any monitor
 label-unfocused = ""
-label-unfocused-foreground = ${colors.secondary}
+label-unfocused-foreground = ${colors.foreground-not-focus}
 label-unfocused-padding = 2
 
 ; visible = Active workspace on unfocused monitor
 label-visible = ""
-label-visible-background = ${colors.background-shaded}
-label-visible-foreground = ${colors.foreground}
-label-visible-underline = ${colors.primary}
+label-visible-background = ${colors.background}
+label-visible-foreground = ${colors.foreground-focus}
+label-visible-underline = ${colors.background}
 label-visible-padding = ${self.label-focused-padding}
 
 ; urgent = Workspace with urgency hint set
 label-urgent = ""
-label-urgent-background = ${colors.background-shaded}
+label-urgent-background = ${colors.background}
 label-urgent-foreground = ${colors.alert}
 label-urgent-padding = 2
 
-[module/cpu]
-type = internal/cpu
-interval = 2
-format-prefix = " "
-format-prefix-foreground = ${colors.foreground-alt}
-format-underline = #f90000
-label = %percentage:2%%
-
-[module/memory]
-type = internal/memory
-interval = 2
-format-prefix = " "
-format-prefix-foreground = ${colors.foreground-alt}
-format-underline = ${colors.cyan}
-label = %percentage_used%%
-
 [module/eth]
 type = internal/network
-interface = enp4s0f1
+interface = eno1
 interval = 5.0
 
-format-connected-underline = ${colors.green}
+format-connected-underline = ${colors.background}
 format-connected-prefix = " "
 format-connected-prefix-foreground = ${colors.foreground}
 label-connected = %local_ip%
-label-connected-foreground =  ${colors.foreground}
-
-format-disconnected =
-
-[module/wifi]
-type = internal/network
-interface = wlp3s0
-interval = 5.0
-
-format-connected-underline = ${colors.green}
-format-connected-prefix = " "
-format-connected-prefix-foreground = ${colors.foreground}
-label-connected = %essid%:%local_ip%
 label-connected-foreground = ${colors.foreground}
 
-format-disconnected = " "
+format-disconnected =
 
 [module/date]
 type = internal/date
@@ -166,7 +130,7 @@ time-alt = %H:%M
 
 format-prefix-foreground = ${colors.foreground}
 format-foreground = ${colors.foreground}
-format-underline = ${colors.foreground}
+format-underline = ${colors.background}
 
 label = %date% %time%
 
@@ -176,10 +140,9 @@ type = internal/alsa
 format-volume = <ramp-volume> <bar-volume>
 
 format-muted-prefix = " "
-format-muted-foreground = ${colors.primary}
+format-muted-foreground = ${colors.foreground-not-focus}
 label-muted = muted
 label-muted-font = 1
-
 
 ramp-volume-0 = ""
 ramp-volume-1 = ""
@@ -197,57 +160,12 @@ bar-volume-foreground-6 = ${colors.foreground}
 bar-volume-gradient = false
 bar-volume-indicator = ""
 bar-volume-indicator-font = 2
-bar-volume-indicator-foreground = ${colors.foreground}
+bar-volume-indicator-foreground = ${colors.foreground-focus}
 bar-volume-fill = "─"
 bar-volume-fill-font = 2
 bar-volume-empty = "─"
 bar-volume-empty-font = 2
-bar-volume-empty-foreground = ${colors.foreground}
-
-[module/temperature]
-type = internal/temperature
-thermal-zone = 0
-warn-temperature = 60
-
-format = <ramp> <label>
-format-underline = #f50a4d
-format-warn = <ramp> <label-warn>
-format-warn-underline = ${self.format-underline}
-
-label = %temperature-c%
-label-warn = %temperature-c%
-label-warn-foreground = ${colors.secondary}
-
-ramp-0 = 
-ramp-1 = 
-ramp-2 = 
-ramp-foreground = ${colors.foreground-alt}
-
-[module/battery]
-type = internal/battery
-
-; This is useful in case the battery never reports 100% charge
-full-at = 99
-
-; Use the following command to list batteries and adapters:
-; $ ls -1 /sys/class/power_supply/
-battery = BAT1
-adapter = ACAD
-
-poll-interval = 5
-
-time-format = %H:%M
-
-label-discharging = %time%
-format-discharging = <ramp-capacity> <label-discharging>
-label-charging = " %time%"
-format-charging = <ramp-capacity> <label-charging>
-label-full = ""
-ramp-capacity-0 = 
-ramp-capacity-1 = 
-ramp-capacity-2 = 
-ramp-capacity-3 = 
-ramp-capacity-4 = 
+bar-volume-empty-foreground = ${colors.foreground-not-focus}
 
 [settings]
 screenchange-reload = true
